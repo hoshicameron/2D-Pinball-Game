@@ -12,11 +12,12 @@ namespace Pinball.UI
         [SerializeField] private Button resumeButton = null;
         [SerializeField] private Button exitButton = null;
 
+        private bool pause = false;
         private void Start()
         {
             pausePanel.SetActive(false);
-            menuButton.onClick.AddListener(PauseGame);
-            resumeButton.onClick.AddListener(ResumeGame);
+            menuButton.onClick.AddListener(PauseMenu);
+            resumeButton.onClick.AddListener(PauseMenu);
             exitButton.onClick.AddListener(ExitGame);
         }
 
@@ -25,18 +26,12 @@ namespace Pinball.UI
             Application.Quit();
         }
 
-        private void ResumeGame()
+        public void PauseMenu()
         {
-            Time.timeScale = 1;
-            pausePanel.SetActive(false);
+            pause = !pause;
+            Time.timeScale = pause ? 0 : 1;
+            pausePanel.SetActive(pause);
         }
 
-        private void PauseGame()
-        {
-            Time.timeScale = 0;
-            pausePanel.SetActive(true);
-        }
-        
-        
     }
 }
